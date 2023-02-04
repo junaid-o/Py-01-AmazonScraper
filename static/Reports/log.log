@@ -1,0 +1,33 @@
+2022-12-25 16:42:28,197 :: INFO :: LineNo.: 439 :: This is just info message
+2022-12-25 16:42:31,808 :: INFO :: LineNo.: 456 :: Initializing Home Page
+2022-12-25 16:42:50,870 :: INFO :: LineNo.: 477 :: Form Submitted successfully
+2022-12-25 16:42:50,871 :: INFO :: LineNo.: 484 :: Initializing search_product()
+2022-12-25 16:42:54,702 :: INFO :: LineNo.: 37 :: Amazon Connection Established
+2022-12-25 16:42:54,704 :: INFO :: LineNo.: 487 :: Initializing generate_detailed_df()
+2022-12-25 16:42:54,706 :: INFO :: LineNo.: 180 :: Initializing get_product_data() for Scrapping Page 1 of search results
+2022-12-25 16:42:54,708 :: INFO :: LineNo.: 182 :: Scrapping Page 1 of search results
+2022-12-25 16:42:57,620 :: INFO :: LineNo.: 82 :: soup prepared for pageNo 1
+2022-12-25 16:42:57,675 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,683 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,688 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,695 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,703 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,709 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,717 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,721 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,727 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,733 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,737 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,747 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,756 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,761 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,770 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,779 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,790 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,797 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,806 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,814 :: INFO :: LineNo.: 91 :: Scraping 1
+2022-12-25 16:42:57,824 :: INFO :: LineNo.: 198 :: Incomplete Scrapping For Page 1 : Few or Multiple Product May have been missed
+2022-12-25 16:42:57,962 :: INFO :: LineNo.: 491 :: Detailed DataFrame Generated
+2022-12-25 16:42:57,967 :: INFO :: LineNo.: 524 :: writing results2.html
+2022-12-25 16:42:58,072 :: INFO :: LineNo.: 535 :: results2.html file written

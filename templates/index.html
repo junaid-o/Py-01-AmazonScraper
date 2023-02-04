@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,,maximum-scale = 1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
+    <meta name="theme-color" content="#ffa41c">
+    <title>Scrapyy: Search Page</title>  <!-- Title of tab in web browser -->
+    <link rel="icon" href="static/images/favicon.png" type="image/png" sizes="any">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+</head>
+{% endblock %}
+
+
+<!-- Style.css for different components on the page -->
+<style>
+body {
+  background-color: none;
+}
+
+/* Properties for entire page */
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 1%;
+  border: 0px;
+  height: 100vh; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style For Form submit button */
+.searchButton{
+background-color:#ffa41c;
+color:black;
+width:35%;
+height:45px;
+transition-duration: 0.2s;
+cursor: pointer;
+padding: 0px;
+text-align: center;
+border: none;
+font-size: 22px;
+font-weight: bold;
+margin-top: 20px;
+border-radius: 4vh;
+box-shadow: 0 9px #999;
+outline: none;
+}
+/* Search Button Hover Properties */
+.searchButton:hover{
+background-color:#ffd814;
+border: none;
+}
+/* Search Button onClick Properties */
+
+.searchButton:active {
+  background-color: #ffd814;
+  box-shadow: 0 6px #666;
+  transform: translateY(4px);
+
+}
+
+/* Making Heading "amazon scrapper" as sticky heading remain on top and move along with scroll */
+
+div.sticky{position:sticky;
+position:-webkit-sticky;
+width:100%;
+height:30px;
+top:0;
+}
+
+/* Setting background image */
+
+div.background{
+    background: linear-gradient(rgba(255,255,255,1), rgba(255,255,255,0.5)), url("static/images/amazon1.png");
+
+  /* The image used */
+   /* background-image: url("static/images/amazon1.png"); */
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+
+/******************* Style for Download Button ****************/
+.downloadButton{background-color:#ffa41c;
+padding: 1px 20px;
+font-weight: bold;
+border: 0px solid #ffa41c;
+transition-duration: 0.1s;
+cursor: pointer;
+color: black;
+text-align: center;
+position:sticky;
+position:-webkit-sticky;
+margin-top:0px;
+
+}
+
+.downloadButton:hover {background-color:#ffd814;
+ color:black;
+ border: 0px solid #ffd814;
+ }
+.downloadButton:active {
+  background-color: #ffd814;
+  box-shadow: 0 6px #666;
+  transform: translateY(4px);
+
+}
+div.stickyButton{position:sticky;
+position:-webkit-sticky;
+width:100%;
+height:30px;
+top:9%;
+}
+
+
+@media only screen and (max-width:800px) {
+  /* For tablets: */
+.column {
+  float: left;
+  width: 50%;
+  padding: 1%;
+  border: 0px;
+  height: 100vh; /* Should be removed. Only for demonstration */
+}
+
+.downloadButton{
+padding: 1px 20px;
+text-align: center;
+position:sticky;
+position:-webkit-sticky;
+margin-top:0px;
+}
+
+}}
+@media only screen and (max-width:420px) {
+      /* For mobile phones: */
+    /* Create two equal columns that floats next to each other */
+    * {
+      box-sizing: initial;
+      margin: 0px;
+    }
+    .column{
+      float: none;
+      width: 100%;
+      height: auto;
+      margin-left:20px;
+    }
+
+    .downloadButton{
+    text-align: center;
+    margin-top:0px;
+    }
+    }}
+</style>
+
+<style>
+
+
+.tooltip {
+  position: absolute;
+  margin-right: 0px;
+  margin-bottom:0px;
+  margin-top:0px;
+  top:2vh;
+  display: inline-block;
+  border:none;
+  text-align:center;
+  font-size:16px;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 100vh;
+  height: 800px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  margin-right:80%;
+  margin-left:0px;
+  margin-top:50px;
+
+
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 0px;
+
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  margin-right:100%;
+}
+
+</style>
+
+
+<body>
+{% block body %}
+
+<div class="sticky">
+
+    <!-- ============ Instruction Tooltip =====-->
+
+    <div class="tooltip" style="margin-left:10px"><button  style="color:black; font-size:1.5em;font-weight:bold; background-color:white;text-align:center; border:none; border-radius:5px;width:30px;height:30px">i</button>
+        <span class="tooltiptext"><span style="font-weight:bold; font-size:2em">Instructions</span><br>
+        <ol style="text-align:justify; padding:25px">
+            <li>DetailedDB is the database that have product information like ProductID, ProductName, Rating, Discounted Price, Discount and Actual Price</li><br>
+            <li> ReviewDB Database store the information on ProductID, ProductName, Review Title and Reviews</li><br>
+            <li>If you want to get product specific information lke reviews only for iphone or laptop or shirt or jeans, in that case
+            you can search in the search bar.</li><br>
+            <li>If you are want to get reviews data, you must provide review page range</li><br>
+            <li>Once the search process will be completed, final result will be displayed in paginated tabular form where you can perform various filter
+            and search operation on the final output result.</li><br>
+            <li>On Result page you will have three download options:
+                <ul>
+                    <br><li>Download CSV: It allows you to download only a section of final result with filter and search operations</li><br>
+                    <li>CSV: It triggers the download of full result in csv format</li><br>
+                    <li>excel: It triggers the download in xls format</li>
+                </ul>
+            </li>
+        </ol>
+      </span>
+    </div>
+
+    <!--=========== Amazon header ==-->
+
+    <h1 style="background-color:#131921; color:white; margin:0px;top:0px;padding:0.8%; text-align: center; font-size:2em">amazon.in
+        <span style="color:#ffa41c">Scrapper</span></h1>
+
+</div>
+
+
+<!-- ================= Download Button For DataBase ==============-->
+
+<div class="stickyButton" style="margin-top:4vh">
+    <h2 style="background-color:#ffa41c; margin-top:4vh; height:6vh; position:sticky; position:-webkit-sticky;">
+        <a class="btn btn-success" href="{{url_for('download_detailed')}}"><button class="downloadButton" type='button' style="width:49.5%; height:6vh;position:sticky; position:-webkit-sticky;">
+                <i class="fa fa-download" style="color:black"><span style="color:black;font-weight: bold;">Get Detailed DB</span></i></button></a>
+        <a class="btn btn-success" href="{{url_for('download_reviews')}}"><button class="downloadButton" type='button' style="width:49.5%; height:6vh;position:sticky; position:-webkit-sticky;">
+                <i class="fa fa-download" style="color:black"><span style="color:black;font-weight: bold;">Get Reviews DB</span></i></button></a>
+    </h2>
+</div>
+
+
+
+<!-- ==================== Form -==============-->
+
+
+<div class="background">
+<div class="row">
+    <!-- First Column For Search Form  -->
+  <div class="column" style="background-color:none;">
+    <center><h1 style="text-align: center; font-size:2.5em; margin-top:10%">Search</h1></center>
+    <div class="content">
+        <div class="form" style="font-size: 16px;">
+            <form action="/analysis" method="POST">
+                <!-- <label for="content">Search</label> -->
+                <input type="text" name="content" id="content" autocomplete="off" style="width: 74%; height:50px; margin-bottom:45px;padding:10px; border-left: 25px solid #ffa41c; border-right: 25px solid #ffa41c; border-radius:1.3vh;background-image: url('static/images/amazon-logo.png');background-repeat:no-repeat; background-size:6%; background-position:right;" placeholder="Search For Products In Amazon...." required><br>
+                <label for="startPage">Search Result Page Range</label><br>
+                <input type="number" name="startPage" id="startPage" style="width: 27%; margin:6px 130px 14px 0px" placeholder="Start PageNo" required>
+                <!-- <label for="endPage">Search Result Page(end)</label> -->
+                <input type="number" name="endPage" id="endPage" style="width: 27%;" placeholder="End PageNo" required><br>
+                <label for="review_startPage">ReviewPage (Required Only if Review data is needed)</label><br>
+                <input type="number" name="reviewStartPage" id="review_startPage" style="width: 27%;margin:6px 130px 14px 0px" placeholder="Start PageNo">
+                <!-- <label for="review_endPage">ReviewPage(end)</label> -->
+                <input type="number" name="reviewEndPage" id="review_endPage" style="width: 27%;" placeholder="End PageNo"><br>
+                <input type="radio" id="Reviews" name="DataFrame" value="Reviews" required>
+                <label for="Reviews"> Get Reviews</label><br>
+                <input type="radio" id="DetailedDataFrame" name="DataFrame" value="DetailedDtaFrame" required>
+                <label for="DetailedDataFrame">Get Detailed DataFrame</label><br><br>
+
+                <input class= "searchButton" type="submit" value="Search" onclick="msg()" style="margin-right:10px">
+                <input class= "searchButton" type="reset" value="Reset" style="margin-left:10px">
+            </form>
+
+            <!-- Script for raising waring message on click of submit -->
+            <script>
+            function msg() {
+              alert("You will have to wait for some time. Time of Data processing depends on the size data!");
+            }
+            </script>
+
+        </div>
+    </div>
+  </div>
+
+  <!--  Second Column for Progress Report -->
+  <div class="column" style="background-color:none;">
+    <center>
+        <h1 style="margin-top:10%;font-size:2.5em">Progress Report </h1><br>
+            <!--   <a href={{ url_for('stream')}} target="_blank">Log</a>   -->
+        <iframe src="{{ url_for('stream')}}" title="ProgressReport" width="100%" height="500px"
+                style="border:none;">
+            <p>Your browser does not support iframes.</p>
+        </iframe>
+    </center>
+  </div>
+</div>
+</div>
+{% endblock %}
+</body>
+</html>

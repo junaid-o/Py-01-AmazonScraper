@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,,maximum-scale = 1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <!-- ===== <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">  ========= use it with <div class="w3-hoverable">-->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">   <!--Icon library -->
+    <!--  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+</head>
+<meta charset='UTF-8'>
+
+<div class="sticky">
+    <h1 style="background-color:#131921; color:white; margin:0px;top:0px;padding:0.8%; text-align: center; font-size:2em">amazon.in
+        <span style="color:#ffa41c">Scrapper</span></h1>
+</div>
+
+
+<!-- &#160 is used to add additional spaces. you can also look for <pre> -->
+<h2 style="background-color:#ffa41c; margin:0px; top:58px; padding:0.4%;text-transform: capitalize; text-align: center; position:sticky; position:-webkit-sticky;">Amazon Data For: {{name}}</h2><br>
+<ul>
+    <li>Please note that few or multiple products or respective information may have been omitted during scrapping process.
+        However, the information displayed is correct with respect to product.</li>
+    <li>If you are downloading the data via provided download button, formatting for some of the entries may get disturbed. In this case you can try reading csv file in pandas as follow:<br></li>
+    <pre>pd.read_csv('fileName.csv',on_bad_lines='skip')</pre>
+</ul>
+<!-- Defining Download Button -->
+
+<br><button class="downloadButton" type='button' onclick='tableToCSV()'><i class="fa fa-download"> Download CSV </i></button>
+
+<!-- Defining the properties of button -->
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+.downloadButton{background-color:#ffa41c;
+padding: 1px 20px;
+font-weight: bold;
+border: 6px solid #ffa41c;
+transition-duration: 0.1s;
+cursor: pointer;
+text-align: center;
+position:sticky;
+position:-webkit-sticky;
+top:22px;}
+
+.downloadButton:hover {background-color:#ffd814;
+ color:black;
+ border: 5px solid #ffd814;
+ }
+.downloadButton:active {
+  background-color: #ffd814;
+  box-shadow: 0 6px #666;
+  transform: translateY(4px);
+}
+
+
+/* Making Heading "amazon scrapper" as sticky heading remain on top and move along with scroll */
+
+div.sticky{position:sticky;
+position:-webkit-sticky;
+width:100%;
+height:70px;
+top:0;
+}
+</style>
+<!-- Script for Converting HTML Table to csv file and for its download -->
+
+<script type='text/javascript' charset='utf-8'>
+        function tableToCSV() {
+
+            // Variable to store the final csv data
+            var csv_data = [];
+
+            // Get each row data
+            var rows = document.getElementsByTagName('tr');
+            for (var i = 0; i < rows.length; i++) {
+
+                // Get each column data
+                var cols = rows[i].querySelectorAll('td,th');
+
+                // Stores each csv row data
+                var csvrow = [];
+                for (var j = 0; j < cols.length; j++) {
+
+                    // Get the text data of each cell
+                    // of a row and push it to csvrow
+                    csvrow.push(cols[j].innerHTML);
+                }
+
+                // Combine each column value with comma
+                csv_data.push(csvrow.join(','));
+            }
+
+            // Combine each row data with new line character
+            csv_data = csv_data.join('\n');
+
+            // Call this function to download csv file
+            downloadCSVFile(csv_data);
+
+        }
+
+        function downloadCSVFile(csv_data) {
+
+            // Create CSV file object and feed
+            // our csv_data into it
+            CSVFile = new Blob([csv_data], {type: 'text/csv'});
+
+            // Create to temporary link to initiate
+            // download process
+            var temp_link = document.createElement('a');
+
+            // Download csv file
+            temp_link.download = 'amazon.csv';
+            var url = window.URL.createObjectURL(CSVFile);
+            temp_link.href = url;
+
+            // This link should not be displayed
+            temp_link.style.display = 'none';
+            document.body.appendChild(temp_link);
+
+            // Automatically click the link to
+            // trigger download
+            temp_link.click();
+            document.body.removeChild(temp_link);
+        }
+    </script>
+<table border="1" class="dataframe table table-stripped">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ProductID</th>
+      <th>ProductName</th>
+      <th>Rating</th>
+      <th>CustomersRated</th>
+      <th>DiscountedPrice</th>
+      <th>DiscountPercent</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>B092JH5TDR</td>
+      <td>Einstein Box Electricity Kit | Science Project Kit | Electronic Circuits | Toys for Kids Age 8-14</td>
+      <td>4.2</td>
+      <td>1817</td>
+      <td>799</td>
+      <td>38</td>
+      <td>1299</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>B09N3FBGX3</td>
+      <td>Christmas STEM 3 in 1 Combo DIY Kit for Kids Over 6+ Years, Educational Kit, Science lab DIY, Electronics Projects, STEM Box</td>
+      <td>4.0</td>
+      <td>1</td>
+      <td>848</td>
+      <td>43</td>
+      <td>1499</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>B0855MGS99</td>
+      <td>Einstein Box Ultimate Science Kit for Kids Aged 6-8-12-14 |Christmas Gift for 6-7 Year Old Boys &amp; Girls| Chemistry Kit Set for 6-14 Year Olds I for Boys and Girls</td>
+      <td>4.3</td>
+      <td>17695</td>
+      <td>699</td>
+      <td>42</td>
+      <td>1199</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>B09WLP4G4W</td>
+      <td>Kit4Curious® 140 Experiments Science Projects DIY Gadgets Toy Educational Learning Kit - 140 Items in 1 kit - Solar Energy, STEAM Activities, Smart Gift for Boys &amp; Girls</td>
+      <td>4.2</td>
+      <td>8051</td>
+      <td>799</td>
+      <td>NA</td>
+      <td>999</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>B09F9WJ4MH</td>
+      <td>Smartivity Amazing Science Kit | 108 Chemistry Experiment Kit for Boys &amp; Girls Age 6-8-10-12 | Christmas Gift for Kids Age 6-14 | Kids Safe Science Kit | STEM Educational Fun Toys | Made in India</td>
+      <td>4.4</td>
+      <td>1027</td>
+      <td>749</td>
+      <td>NA</td>
+      <td>999</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>B092JH5TDR</td>
+      <td>Einstein Box Electricity Kit | Science Project Kit | Electronic Circuits | Toys for Kids Age 8-14</td>
+      <td>4.2</td>
+      <td>1817</td>
+      <td>799</td>
+      <td>38</td>
+      <td>1299</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>B09CTSLC59</td>
+      <td>Storio Educational Toys Series Science Experiment Kit for Kids Aged 6-8-12-14 |Birthday Gift for 6-7 Year Old Boys &amp; Girls| Chemistry Kit Set for 6-14 Year Olds| Kids Safe &amp; Non - Toxic Chemistry Kit for Birthday Gifts| Made in India</td>
+      <td>4.1</td>
+      <td>56</td>
+      <td>647</td>
+      <td>NA</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>B08NC8N9GK</td>
+      <td>ButterflyEduFields 20+ Science Experiments Kit for Kids, Jumbo STEM DIY Educational Electronic Building Construction Activity Toys for Boys Girls Age 5+ | Motor Machines</td>
+      <td>4.1</td>
+      <td>1082</td>
+      <td>1699</td>
+      <td>NA</td>
+      <td>1999</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>B08J3XJ1GK</td>
+      <td>Smartivity Hydraulic Plane Launcher STEM DIY Fun Toy for Kids 6 to 12, Best Christmas Gift Toy for Boys &amp; Girls Age 6-8-10-12, Science Toy, Educational Based Activity Game, Made in India</td>
+      <td>4.3</td>
+      <td>3214</td>
+      <td>599</td>
+      <td>25</td>
+      <td>799</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>B0BC6BSVJN</td>
+      <td>Smartivity Human Body STEM DIY Fun Toys for Kids 6 to 12, 20 Cards Learn About Organs, Functions, Health &amp; Diet, Best Gift Toy for Boys &amp; Girls Age 6-8-10-12, Science Toy, Educational Based Activity Game</td>
+      <td>5.0</td>
+      <td>15</td>
+      <td>679</td>
+      <td>24</td>
+      <td>899</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>B08WQ1RFX6</td>
+      <td>Einstein Box Science Gift Set of Slime Kit + Science Kit + Electricity Kit | Toys for Boys and Girls for 5, 6, 7, 8, 9, 10 and Above | Learning and Educational Toys</td>
+      <td>4.2</td>
+      <td>1817</td>
+      <td>1999</td>
+      <td>46</td>
+      <td>3699</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>B071WRVX72</td>
+      <td>Kit4Curious Super Kit 100 Items in a kit - Science &amp; Fun Innovation Kit with Instruction Manual for 100 Projects</td>
+      <td>4.2</td>
+      <td>8051</td>
+      <td>699</td>
+      <td>NA</td>
+      <td>999</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>B07XZB1HXB</td>
+      <td>kit4curious 125 projects diy activity science electronics starter mega kit with user guide- Multi color</td>
+      <td>4.1</td>
+      <td>3461</td>
+      <td>649</td>
+      <td>NA</td>
+      <td>999</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>B0B251GSZL</td>
+      <td>Doctor Jupiter Spa Science Experiment Kit for Kids Aged 6-8-12-14 |Gift for 6-7 Year Old Boys &amp; Girls| Science Learning Kit Set for 6-14 Year Olds</td>
+      <td>4.4</td>
+      <td>468</td>
+      <td>699</td>
+      <td>53</td>
+      <td>1499</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>B09F9WJ4MH</td>
+      <td>Smartivity Amazing Science Kit | 108 Chemistry Experiment Kit for Boys &amp; Girls Age 6-8-10-12 | Christmas Gift for Kids Age 6-14 | Kids Safe Science Kit | STEM Educational Fun Toys | Made in India</td>
+      <td>4.4</td>
+      <td>1027</td>
+      <td>749</td>
+      <td>NA</td>
+      <td>999</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>B0B755Y6YM</td>
+      <td>DIGANT Swing Lover Metal Balance Toy Science Psychology Home Office Desk Decor Decompressive Science Stress Relief Physics Toy</td>
+      <td>3.1</td>
+      <td>4</td>
+      <td>499</td>
+      <td>50</td>
+      <td>999</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>B07SKRLDGT</td>
+      <td>kit4curious magnetic levitation experiment school science project kit with report and instruction- Multi color</td>
+      <td>4.2</td>
+      <td>494</td>
+      <td>299</td>
+      <td>25</td>
+      <td>399</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>B09PL523P3</td>
+      <td>WONDRBOX Science Experiment Kits for Kids Aged 6-8-12-14 |Science Kit Birthday Gift Set for 6-14-Year-Olds | STEM Educational DIY Fun Toys I for Boys and Girls</td>
+      <td>3.7</td>
+      <td>346</td>
+      <td>699</td>
+      <td>42</td>
+      <td>1199</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>B08LNHV2VZ</td>
+      <td>AVS COMPONENTS Mini Science Project Kit For School Projects (Toy Motor, Fan, Battery, Cap Switch)</td>
+      <td>3.2</td>
+      <td>15</td>
+      <td>99</td>
+      <td>80</td>
+      <td>499</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>B08XQ9XPQT</td>
+      <td>Butterfly EduFields RainWater Harvesting Science Experiment Kit for Kids 10 Years+, Roof Drain &amp; Mini Water Pump School Science Exhibition Project Kit | Learning &amp; Educational DIY STEM Toy,Multicolor</td>
+      <td>3.6</td>
+      <td>708</td>
+      <td>410</td>
+      <td>9</td>
+      <td>450</td>
+    </tr>
+  </tbody>
+</table>
+<p>20 rows × 7 columns</p>

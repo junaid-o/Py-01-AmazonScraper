@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+<title>Search Page</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1 style="text-align: center">Search</h1>
+
+    <div class="form">
+        <form action="/analysis" method="POST">
+            <label for="content">Search</label>
+            <input type="text" name="content" id="content" required autocomplete="off" style="width: 66%;"><br>
+            <label for="startPage">Search Result Page(start)</label>
+            <input type="number" name="startPage" id="startPage" required style="width: 46.5%;"><br>
+            <label for="endPage">Search Result Page(end)</label>
+            <input type="number" name="endPage" id="endPage" required style="width: 47%;"><br>
+            <label for="review_startPage">ReviewPage(start)</label>
+            <input type="number" name="reviewStartPage" id="review_startPage" style="width: 54%;"><br>
+            <label for="review_endPage">ReviewPage(end)</label>
+            <input type="number" name="reviewEndPage" id="review_endPage" style="width: 54.5%;"><br>
+            <input type="radio" id="Reviews" name="DataFrame" value="Reviews" required>
+            <label for="Reviews"> Get Reviews</label><br>
+            <input type="radio" id="DetailedDataFrame" name="DataFrame" value="DetailedDtaFrame" required>
+            <label for="DetailedDataFrame">Get Detailed DataFrame</label><br><br>
+
+            <input type="submit" value="Search" onclick="msg()">
+
+        </form>
+
+        <!-- Script for raising waring message on click of submit -->
+        <script>
+        function msg() {
+          alert("You will have to wait for some time. Time of Data processing depends on the size data!");
+        }
+        </script>
+
+    </div>
+</div>
+
+
+
+<center>
+    <!--   <a href={{ url_for('stream')}} target="_blank">Log</a>   -->
+    <iframe src="{{ url_for('stream')}}" target="_blank" title="description" width="60%" height="50%">
+        <p>Your browser does not support iframes.</p>
+    </iframe>
+</center>
+
+
+
+
+
+
+
+
+{% endblock %}
+<!--  ____________________   -->

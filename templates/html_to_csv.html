@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,,maximum-scale = 1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--========================= LOCAL MAIN.CSS STYLESHEET ===========================-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <!--========================= ICON FOR DOWNLOAD BUTTON ===========================-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- ========================================== Table Pagination ============================================-->
+    <!--<script type="text/javascript" src="https://cdn.datatables.net/scroller/2.0.7/js/dataTables.scroller.min.js"></script>-->
+    <!--<script type="text/javascript" src="https://cdn.datatables.net/scroller/2.0.7/css/scroller.dataTables.min.css"></script>-->
+
+
+
+    <!-- =========== Jquery JavaScript File =========== -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <!-- =========== DataTable CSS and JS ==============-->
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">-->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
+    <!-- =========================== Fixed Headers ================================== -->
+    <!--<script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.3.1/css/fixedHeader.dataTables.min.css"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.3.1/js/dataTables.fixedHeader.min.js"></script>-->
+
+    <!-- ========================= RESPONSIVE DATA-TABLES FOR SIZE ================================== -->
+    <script type="text/css" src="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+    <!-- Button-->
+    <script type="text/css" src="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+</head>
+<!--==================================== FIRST MAIN HEADING ==================================-->
+<div class="sticky">
+    <h1 style="background-color:#131921; color:white; margin:0px;top:0px;padding:0.8%; text-align: center; font-size:2em; position:sticky; position:-webkit-sticky">amazon.in
+        <span style="color:#ffa41c">Scrapper</span></h1>
+</div>
+
+<!--========= SECOND HEADING FOR GENERATED DATA-TABLE ========-->
+<!-- &#160 is used to add additional spaces. you can also look for <pre> -->
+<h2 style="background-color:#ffa41c; margin:0px; top:58px; padding:0.4%;text-transform: capitalize; text-align: center; position:sticky; position:-webkit-sticky;">Amazon Data For: {{name}}</h2><br>
+<ul>
+    <li>Please note that few or multiple products or respective information may have been omitted during scrapping process.
+        However, the information displayed is correct with respect to product.</li>
+    <li>If you are downloading the data via provided download button, formatting for some of the entries may get disturbed. In this case you can try reading csv file in pandas as follow:<br></li>
+    <pre>pd.read_csv('fileName.csv',on_bad_lines='skip')</pre>
+</ul>
+
+<!--=============== Defining Download Button ================-->
+
+<br><button class="downloadButton" type='button' onclick='tableToCSV()'><i class="fa fa-download"> Download CSV </i></button>
+<br><br>
+<!--======= PROPERTIES FOR BUTTON and SECOND MAIN HEADING ===========-->
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+.downloadButton{background-color:#ffa41c;
+padding: 1px 20px;
+font-weight: bold;
+border: 6px solid #ffa41c;
+transition-duration: 0.1s;
+cursor: pointer;
+text-align: center;
+position:sticky;
+position:-webkit-sticky;
+top:22px;
+margin-bottom:-5em;
+}
+
+.downloadButton:hover {background-color:#ffd814;
+ color:black;
+ border: 5px solid #ffd814;
+ }
+.downloadButton:active {
+  background-color: #ffd814;
+  box-shadow: 0 6px #666;
+  transform: translateY(4px);
+}
+
+
+/* Making Heading "amazon scrapper" as sticky heading remain on top and move along with scroll */
+
+div.sticky{position:sticky;
+position:-webkit-sticky;
+width:100%;
+height:70px;
+top:0;
+}
+</style>
+
+<style>
+    button.buttons-html5 {
+    background-color:#ffa41c;
+    text-rendering: auto;
+    cursor: pointer;
+    margin-top:-5em;
+    margin-bottom: 2em;
+    padding: 1px 20px;
+    font-weight: bold;
+    border: 6px solid #ffa41c;
+    transition-duration: 0.1s;
+    text-align: center;
+    position:sticky;
+    position:-webkit-sticky;
+    top:25px;
+    width:85px;
+
+}
+button.buttons-html5:hover {background-color:#ffd814;
+ color:black;
+ border: 5px solid #ffd814;
+ }
+button.buttons-html5:active {
+  background-color: #ffd814;
+  box-shadow: 0 6px #666;
+  transform: translateY(4px);
+}
+</style>
+<!--============= Script for Converting HTML Table to csv file and for its download ============-->
+<!--============= WITH THIS METHOD ONLY THE DATA DISPLAYED PER PAGE WILL BE DOWNLOADED  ============-->
+
+<script type='text/javascript' charset='utf-8'>
+        function tableToCSV() {
+
+            // Variable to store the final csv data
+            var csv_data = [];
+
+            // Get each row data
+            var rows = document.getElementsByTagName('tr');
+            for (var i = 0; i < rows.length; i++) {
+
+                // Get each column data
+                var cols = rows[i].querySelectorAll('td,th');
+
+                // Stores each csv row data
+                var csvrow = [];
+                for (var j = 0; j < cols.length; j++) {
+
+                    // Get the text data of each cell
+                    // of a row and push it to csvrow
+                    csvrow.push(cols[j].innerHTML);
+                }
+
+                // Combine each column value with comma
+                csv_data.push(csvrow.join(','));
+            }
+
+            // Combine each row data with new line character
+            csv_data = csv_data.join('\n');
+
+            // Call this function to download csv file
+            downloadCSVFile(csv_data);
+
+        }
+
+        function downloadCSVFile(csv_data) {
+
+            // Create CSV file object and feed
+            // our csv_data into it
+            CSVFile = new Blob([csv_data], {type: 'text/csv'});
+
+            // Create to temporary link to initiate
+            // download process
+            var temp_link = document.createElement('a');
+
+            // Download csv file
+            temp_link.download = 'amazon.csv';
+            var url = window.URL.createObjectURL(CSVFile);
+            temp_link.href = url;
+
+            // This link should not be displayed
+            temp_link.style.display = 'none';
+            document.body.appendChild(temp_link);
+
+            // Automatically click the link to
+            // trigger download
+            temp_link.click();
+            document.body.removeChild(temp_link);
+        }
+    </script>
+
+<!-- ============================ DataTable Initialization With It Extensions ========================-->
+
+<script type="text/javascript" charset='utf-8'>
+$(document).ready(function(){$('table').DataTable({
+    paging: true,
+    searching: true,
+    "pageLength": 500,
+    fixedHeader: false,
+    pagingType: "full_numbers",
+    'dom': '<B><br><br><lftpi>',
+    buttons: ['csv', 'excel'],
+});});</script>
+<!-- =================================== TABLE ================================-->
+<body>

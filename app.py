@@ -27,7 +27,7 @@ def isListEmpty(inList):
 
 #  tls=True,tlsAllowInvalidCertificates=True
 connection_string = os.getenv("MONGODB_CONNECTION_STRING")
-#"mongodb+srv://amazon:OV3nZWFLCrKN6AHF@cluster0.sdazx6b.mongodb.net/?retryWrites=true&w=majority"
+
 client = pymongo.MongoClient(connection_string,tls=True,tlsAllowInvalidCertificates=True)
 
 # Database creation
